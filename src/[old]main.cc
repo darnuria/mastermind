@@ -2,12 +2,13 @@
 #include <string>
 #include <vector>
 
-#define MAX 32768
-#define P 5
-#define C 8
+#define P 5 // number of pawns
+#define C 8 // number of colors
 
-std::string print(int p) {
-    std::string str;
+#define MAX 32768 // C^P
+
+std::string print_pawns(int p) {
+    std::string str = "[ ";
     for (int i = 0; i < P; ++i) {
         switch (p % C) {
         case 0:
@@ -40,7 +41,7 @@ std::string print(int p) {
     return str;
 }
 
-int f(int a, int b) {
+int get_number_of_well_placed_pawn(int a, int b) {
     int c = 0;
     for (int i = 0; i < P; ++i) {
         if (a % C == b % C) {
@@ -52,7 +53,7 @@ int f(int a, int b) {
     return c;
 }
 
-int g(int a, int b) {
+int get_number_of_good_colors(int a, int b) {
     std::vector<bool> x(C, false);
     std::vector<bool> y(C, false);
     for (int i = 0; i < P; ++i) {
@@ -70,7 +71,7 @@ int g(int a, int b) {
     return c;
 }
 
-int h(int p) {
+int get_number_of_colors(int p) {
     std::vector<bool> x(C, false);
     for (int i = 0; i < P; ++i) {
         x[p % C] = true;
@@ -87,27 +88,27 @@ int h(int p) {
 
 int main(void) {
     int p = 0;
-    std::vector<bool> c(MAX, true);
+    std::vector<bool> vec(MAX, true);
     for (int i = 0; i < MAX; ++i) {
-        if (h(i) != P) {
-            c[i] = false;
+        if (get_number_of_colors(i) != P) {
+            vec[i] = false;
         }
     }
     for (int turn = 1; true; ++turn) {
         int n = 0;
         for (int i = 0; i < MAX; ++i) {
-            if (c[i]) {
+            if (vec[i]) {
                 ++n;
                 p = i;
             }
         }
         if (!n) {
-            std::cout << "\x1b[31m.. error:\x1b[0m sequence not found" << std::endl;
+            std::cout << "\x1b[31m.. error:\x1b[0m sequence not found";
             break;
         }
-        std::cout << std::endl << "\x1b[33m.. sequences:\x1b[0m " << n << std::endl;
-        std::cout << "\x1b[33m.. turn " << turn << ":\x1b[0m" << print(p) << std::endl;
-        c[p] = false;
+        std::cout << "\x1b[33m.. sequences:\x1b[0m " << n << std::endl;
+        std::cout << "\x1b[33m.. turn " << turn;
+        std::cout << ": \x1b[0m" << print_pawns(p) << std::endl;
         int b = 0, w = 0;
         std::cout << "\x1b[34m>> black:\x1b[0m ";
         std::cin >> b;
@@ -118,13 +119,14 @@ int main(void) {
             break;
         }
         if (b == P) {
-            std::cout << "\x1b[32m.. success:\x1b[0m I win !" << std::endl;
+            std::cout << "\x1b[32m.. success:\x1b[0m I win!" << std::endl;
             break;
         }
-
+        vec[p] = false;
         for (int i = 0; i < MAX; ++i) {
-            if (c[i] && (f(p, i) != b || g(p, i) != b + w)) {
-                c[i] = false;
+            if (vec[i] && (get_number_of_well_placed_pawn(p, i) != b
+                || get_number_of_good_colors(p, i) != b + w)) {
+                vec[i] = false;
             }
         }
     }
