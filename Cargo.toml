@@ -3,3 +3,6 @@
 name = "Mastermind"
 version = "1.0.0"
 authors = ["Yvan Sraka <yvan.sraka@gmail.com>"]
+
+[dependencies]
+regex = "1.0.0"
