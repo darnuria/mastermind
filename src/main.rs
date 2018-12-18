@@ -20,15 +20,15 @@ fn println_pawns(mut p: usize) {
             5 => " Yel",
             6 => " Ora",
             7 => " Bro",
-            _  => " ..."
+            _ => " ...",
         });
         p /= C;
     }
     println!("{} ]", str);
 }
 
-fn get_number_of_well_placed_pawn(mut a: usize , mut b: usize) -> usize {
-    let mut c: usize  = 0;
+fn get_number_of_well_placed_pawn(mut a: usize, mut b: usize) -> usize {
+    let mut c: usize = 0;
     for _ in 0..P {
         if a % C == b % C {
             c += 1;
@@ -39,7 +39,7 @@ fn get_number_of_well_placed_pawn(mut a: usize , mut b: usize) -> usize {
     return c;
 }
 
-fn get_number_of_good_colors(mut a: usize , mut b: usize) -> usize {
+fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
     let mut x: Vec<bool> = Vec::with_capacity(C);
     let mut y: Vec<bool> = Vec::with_capacity(C);
     for _ in 0..C {
@@ -90,7 +90,7 @@ fn main() {
     println!("The code can not contain twice the same color? [Y/n] ");
     let mut input = String::new();
     match io::stdin().read_line(&mut input) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
     }
     let re = match Regex::new(r"^[yY]?$") {
@@ -124,26 +124,28 @@ fn main() {
         println!("\x1b[34m>> black:\x1b[0m ");
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
         }
         let b: usize = match input.trim().parse() {
             Ok(b) => b,
-            Err(err) =>  { panic!(err) },
+            Err(err) => panic!(err),
         };
         println!("\x1b[34m>> white:\x1b[0m ");
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
-            Ok(_) => {},
+            Ok(_) => {}
             Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
         }
         let w: usize = match input.trim().parse() {
             Ok(b) => b,
-            Err(err) => { panic!(err) },
+            Err(err) => panic!(err),
         };
         if b + w > 5 {
-            println!("\x1b[31m.. error:\x1b[0m \
-                     please input two numbers b, w in [0, 5] with b + w <= 5");
+            println!(
+                "\x1b[31m.. error:\x1b[0m \
+                 please input two numbers b, w in [0, 5] with b + w <= 5"
+            );
             continue;
         }
         if b == P {
@@ -152,8 +154,10 @@ fn main() {
         }
         vec[p] = false;
         for i in 0..MAX {
-            if vec[i] && (get_number_of_well_placed_pawn(p, i) != b
-                            || get_number_of_good_colors(p, i) != b + w) {
+            if vec[i]
+                && (get_number_of_well_placed_pawn(p, i) != b
+                    || get_number_of_good_colors(p, i) != b + w)
+            {
                 vec[i] = false;
             }
         }
