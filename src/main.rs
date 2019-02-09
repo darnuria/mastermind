@@ -36,7 +36,7 @@ fn get_number_of_well_placed_pawn(mut a: usize, mut b: usize) -> usize {
         a /= C;
         b /= C;
     }
-    return c;
+    c
 }
 
 fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
@@ -58,7 +58,7 @@ fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
             c += 1;
         }
     }
-    return c;
+    c
 }
 
 fn get_number_of_colors(mut p: usize) -> usize {
@@ -76,7 +76,7 @@ fn get_number_of_colors(mut p: usize) -> usize {
             c += 1;
         }
     }
-    return c;
+    c
 }
 
 fn main() {
