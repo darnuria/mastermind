@@ -3,10 +3,10 @@ extern crate regex;
 use regex::Regex;
 use std::io;
 
-static P: usize = 5; // number of pawns
-static C: usize = 8; // number of colors
+const P: usize = 5; // number of pawns
+const C: usize = 8; // number of colors
 
-static MAX: usize = 32768; // C^P
+const MAX: usize = 32768; // C^P
 
 fn println_pawns(mut p: usize) {
     let mut str: String = "[".to_string();
