@@ -40,12 +40,9 @@ fn get_number_of_well_placed_pawn(mut a: usize, mut b: usize) -> usize {
 }
 
 fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
-    let mut x: Vec<bool> = Vec::with_capacity(C);
-    let mut y: Vec<bool> = Vec::with_capacity(C);
-    for _ in 0..C {
-        x.push(false);
-        y.push(false);
-    }
+    let mut x = [false ; C];
+    let mut y = [false ; C];
+
     for _ in 0..P {
         x[a % C] = true;
         y[b % C] = true;
@@ -62,10 +59,8 @@ fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
 }
 
 fn get_number_of_colors(mut p: usize) -> usize {
-    let mut x: Vec<bool> = Vec::with_capacity(C);
-    for _ in 0..C {
-        x.push(false);
-    }
+    let mut x = [false ; C];
+
     for _ in 0..P {
         x[p % C] = true;
         p /= C;
@@ -83,10 +78,8 @@ fn main() {
     println!("# ## ### ##### ######## ############ ######## ##### ### ## #");
     println!("# ## ### ##### ########  MASTERMIND  ######## ##### ### ## #");
     println!("# ## ### ##### ######## ############ ######## ##### ### ## #");
-    let mut vec: Vec<bool> = Vec::with_capacity(MAX);
-    for _ in 0..MAX {
-        vec.push(true);
-    }
+    let mut vec = [true ; MAX];
+
     println!("The code can not contain twice the same color? [Y/n] ");
     let mut input = String::new();
     match io::stdin().read_line(&mut input) {
