@@ -49,7 +49,8 @@ fn get_number_of_good_colors(mut a: usize, mut b: usize) -> usize {
         a /= C;
         b /= C;
     }
-    let mut c: usize = 0;
+
+    let mut c = 0;
     for i in 0..C {
         if x[i] && y[i] {
             c += 1;
@@ -65,7 +66,8 @@ fn get_number_of_colors(mut p: usize) -> usize {
         x[p % C] = true;
         p /= C;
     }
-    let mut c: usize = 0;
+
+    let mut c = 0;
     for i in 0..C {
         if x[i] {
             c += 1;
@@ -82,14 +84,13 @@ fn main() {
 
     println!("The code can not contain twice the same color? [Y/n] ");
     let mut input = String::new();
-    match io::stdin().read_line(&mut input) {
-        Ok(_) => {}
-        Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
+
+    if let Err(err) = io::stdin().read_line(&mut input) {
+        println!("\x1b[31m.. error:\x1b[0m {}", err);
     }
-    let re = match Regex::new(r"^[yY]?$") {
-        Ok(re) => re,
-        Err(err) => panic!("\x1b[31m.. error:\x1b[0m {}", err),
-    };
+
+    let re = Regex::new(r"^[yY]?$").unwrap();
+
     if re.is_match(input.trim()) {
         for i in 0..MAX {
             if get_number_of_colors(i) != P {
@@ -97,43 +98,45 @@ fn main() {
             }
         }
     }
-    let mut turn: usize = 1;
+
+    let mut turn = 1;
     loop {
-        let mut n: usize = 0;
-        let mut p: usize = 0;
+        let mut n = 0;
+        let mut p = 0;
         for i in 0..MAX {
             if vec[i] {
                 n += 1;
                 p = i;
             }
         }
+
         if n == 0 {
             println!("\x1b[31m.. error:\x1b[0m sequence not found...");
             break;
         }
+
         println!("\x1b[33m.. sequences:\x1b[0m {}", n);
         println!("\x1b[33m.. turn {}:\x1b[0m ", turn);
         println_pawns(p);
         println!("\x1b[34m>> black:\x1b[0m ");
+
         let mut input = String::new();
-        match io::stdin().read_line(&mut input) {
-            Ok(_) => {}
-            Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
+
+        if let Err(err) = io::stdin().read_line(&mut input) {
+           println!("\x1b[31m.. error:\x1b[0m {}", err);
         }
-        let b: usize = match input.trim().parse() {
-            Ok(b) => b,
-            Err(err) => panic!(err),
-        };
+
+        let b = input.trim().parse().unwrap();
+
         println!("\x1b[34m>> white:\x1b[0m ");
         let mut input = String::new();
-        match io::stdin().read_line(&mut input) {
-            Ok(_) => {}
-            Err(err) => println!("\x1b[31m.. error:\x1b[0m {}", err),
-        }
-        let w: usize = match input.trim().parse() {
-            Ok(b) => b,
-            Err(err) => panic!(err),
+
+        if let Err(err) = io::stdin().read_line(&mut input) {
+            println!("\x1b[31m.. error:\x1b[0m {}", err);
         };
+
+        let w: usize = input.trim().parse().unwrap();
+
         if b + w > 5 {
             println!(
                 "\x1b[31m.. error:\x1b[0m \
@@ -141,10 +144,12 @@ fn main() {
             );
             continue;
         }
+
         if b == P {
             println!("\x1b[32m.. success:\x1b[0m I win!");
             break;
         }
+
         vec[p] = false;
         for i in 0..MAX {
             if vec[i]
