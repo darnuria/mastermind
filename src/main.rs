@@ -162,3 +162,23 @@ fn main() {
         turn += 1;
     }
 }
+
+
+mod test {
+    use crate::{get_number_of_colors};
+
+    #[test]
+    fn test_get_nb_of_colors() {
+        // Note: Testing global configuration
+        // number of pawns
+        assert_eq!(5, crate::P);
+        // number of colors
+        assert_eq!(8, crate::C);
+
+        assert_eq!(1, get_number_of_colors(0));
+        assert_eq!(2, get_number_of_colors(1));
+        assert_eq!(2, get_number_of_colors(2));
+
+        assert_eq!(2, get_number_of_colors(7));
+    }
+}
