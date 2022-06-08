@@ -1,8 +1,5 @@
 [package]
 
-name = "Mastermind"
-version = "1.0.0"
-authors = ["Yvan Sraka <yvan.sraka@gmail.com>"]
-
-[dependencies]
-regex = "1.0.0"
+name = "mastermind"
+version = "1.0.1"
+authors = ["Yvan Sraka <yvan.sraka@gmail.com>", "Axel Viala <darnuria@darnuria.eu>"]
